@@ -4,7 +4,7 @@
   "description": "Orbit-components is a React component library which provides developers with the easiest possible way of building Kiwi.com’s products.",
   "sideEffects": false,
   "scripts": {
-    "storybook": "start-storybook -p 6007 -c .storybook --ci -s ./static",
+    "storybook": "yarn build:icons && start-storybook -p 6007 -c .storybook --ci -s ./static",
     "build": "yarn clean && yarn build:icons && yarn build:iconFont && yarn build:typeFiles && yarn build:lib && yarn build:module && yarn build:umd",
     "build:lib": "babel --out-dir lib --ignore **/*.stories.js,**/*.test.js,**/*.storyshot.js,**/__examples__/*.js,**/examples.js src && yarn copy:lib",
     "build:module": "cross-env BABEL_TARGET=\"js-esm\" babel --out-dir es --ignore **/*.stories.js,**/*.test.js,**/*.storyshot.js,**/__examples__/*.js,**/examples.js src && yarn copy:module",
@@ -18,7 +18,7 @@
     "copy:lib": "copyfiles -u 1 'src/**/*.md' lib && copyfiles -u 1 'src/**/*.js.flow' lib && copyfiles -u 1 'src/**/*.json' lib && copyfiles -u 1 'src/**/*.d.ts' lib",
     "copy:module": "copyfiles -u 1 'src/**/*.md' es && copyfiles -u 1 'src/**/*.js.flow' es && copyfiles -u 1 'src/**/*.json' es",
     "clean": "rimraf lib es src/icons/*.js src/icons/*.js.flow",
-    "prepare": "npm run build",
+    "prepublishOnly": "npm run build",
     "prettier:test": "prettier --check '**/*.md'",
     "watch": "concurrently \"npm run build:lib -- --watch\" \"npm run build:module -- --watch\"",
     "eslint:check": "eslint . --ext .js,.js.flow,.ts --report-unused-disable-directives",

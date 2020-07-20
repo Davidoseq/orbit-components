@@ -25,6 +25,10 @@ jobs:
           command: yarn
 
       - run:
+          name: Build
+          command: yarn build
+
+      - run:
           name: Flow
           command: yarn flow:check
 
@@ -51,7 +55,9 @@ jobs:
           command: yarn
       - run:
           name: Build and deploy
-          command: yarn deploy:storybook --ci --host-token-env-variable=GITHUB_TOKEN
+          command: |
+            yarn build:icons
+            yarn deploy:storybook --ci --host-token-env-variable=GITHUB_TOKEN
 
   deploy-surge:
     docker:
@@ -68,7 +74,9 @@ jobs:
           command: yarn
       - run:
           name: Build storybook
-          command: yarn build:storybook
+          command: |
+            yarn build:icons
+            yarn build:storybook
       - run:
           name: Deploy storybook to surge
           command: yarn deploy:surge
